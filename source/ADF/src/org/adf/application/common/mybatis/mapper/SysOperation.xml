@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysOperation">
+
+    <insert id="insertSysOperation" parameterType="SysOperation">
+        insert into sys_operation
+       (operation_code
+       ,function_code
+       ,operation_name
+       ,description)
+        values
+       (#{operation_code}
+       ,#{function_code}
+       ,#{operation_name}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysOperation" parameterType="SysOperation">
+        update sys_operation
+           set operation_code = #{operation_code}
+              ,function_code = #{function_code}
+              ,operation_name = #{operation_name}
+              ,description = #{description}
+         where 1 = 1
+           and operation_code = #{operation_code}
+    </update>
+
+    <delete id="deleteSysOperation" parameterType="SysOperation">
+        delete
+          from sys_operation
+         where 1 = 1
+           and operation_code = #{operation_code}
+    </delete>
+
+    <select id="selectSysOperationByPk" parameterType="SysOperation" resultType="SysOperation">
+        select operation_code
+              ,function_code
+              ,operation_name
+              ,description
+          from sys_operation
+         where 1 = 1
+           and operation_code = #{operation_code}
+    </select>
+
+</mapper>

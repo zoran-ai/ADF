@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataDictType">
+
+    <insert id="insertSysDataDictType" parameterType="SysDataDictType">
+        insert into sys_data_dict_type
+       (type_code
+       ,type_name
+       ,description)
+        values
+       (#{type_code}
+       ,#{type_name}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysDataDictType" parameterType="SysDataDictType">
+        update sys_data_dict_type
+           set type_code = #{type_code}
+              ,type_name = #{type_name}
+              ,description = #{description}
+         where 1 = 1
+           and type_code = #{type_code}
+    </update>
+
+    <delete id="deleteSysDataDictType" parameterType="SysDataDictType">
+        delete
+          from sys_data_dict_type
+         where 1 = 1
+           and type_code = #{type_code}
+    </delete>
+
+    <select id="selectSysDataDictTypeByPk" parameterType="SysDataDictType" resultType="SysDataDictType">
+        select type_code
+              ,type_name
+              ,description
+          from sys_data_dict_type
+         where 1 = 1
+           and type_code = #{type_code}
+    </select>
+
+</mapper>

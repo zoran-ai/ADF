@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataDictItem">
+
+    <insert id="insertSysDataDictItem" parameterType="SysDataDictItem">
+        insert into sys_data_dict_item
+       (item_code
+       ,type_code
+       ,item_name
+       ,display_order
+       ,enabled_flag)
+        values
+       (#{item_code}
+       ,#{type_code}
+       ,#{item_name}
+       ,#{display_order}
+       ,#{enabled_flag})
+    </insert>
+
+    <update id="updateSysDataDictItem" parameterType="SysDataDictItem">
+        update sys_data_dict_item
+           set item_code = #{item_code}
+              ,type_code = #{type_code}
+              ,item_name = #{item_name}
+              ,display_order = #{display_order}
+              ,enabled_flag = #{enabled_flag}
+         where 1 = 1
+           and item_code = #{item_code}
+           and type_code = #{type_code}
+    </update>
+
+    <delete id="deleteSysDataDictItem" parameterType="SysDataDictItem">
+        delete
+          from sys_data_dict_item
+         where 1 = 1
+           and item_code = #{item_code}
+           and type_code = #{type_code}
+    </delete>
+
+    <select id="selectSysDataDictItemByPk" parameterType="SysDataDictItem" resultType="SysDataDictItem">
+        select item_code
+              ,type_code
+              ,item_name
+              ,display_order
+              ,enabled_flag
+          from sys_data_dict_item
+         where 1 = 1
+           and item_code = #{item_code}
+           and type_code = #{type_code}
+    </select>
+
+</mapper>

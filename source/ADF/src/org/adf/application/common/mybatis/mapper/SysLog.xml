@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysLog">
+
+    <insert id="insertSysLog" parameterType="SysLog">
+        insert into sys_log
+       (log_id
+       ,log_source
+       ,log_type
+       ,log_time
+       ,log_content
+       ,user_id
+       ,attrbute1
+       ,attrbute2
+       ,attrbute3
+       ,attrbute4
+       ,attrbute5
+       ,attrbute6
+       ,attrbute7
+       ,attrbute8
+       ,attrbute9
+       ,attrbute10)
+        values
+       (#{log_id}
+       ,#{log_source}
+       ,#{log_type}
+       ,#{log_time}
+       ,#{log_content}
+       ,#{user_id}
+       ,#{attrbute1}
+       ,#{attrbute2}
+       ,#{attrbute3}
+       ,#{attrbute4}
+       ,#{attrbute5}
+       ,#{attrbute6}
+       ,#{attrbute7}
+       ,#{attrbute8}
+       ,#{attrbute9}
+       ,#{attrbute10})
+    </insert>
+
+    <update id="updateSysLog" parameterType="SysLog">
+        update sys_log
+           set log_id = #{log_id}
+              ,log_source = #{log_source}
+              ,log_type = #{log_type}
+              ,log_time = #{log_time}
+              ,log_content = #{log_content}
+              ,user_id = #{user_id}
+              ,attrbute1 = #{attrbute1}
+              ,attrbute2 = #{attrbute2}
+              ,attrbute3 = #{attrbute3}
+              ,attrbute4 = #{attrbute4}
+              ,attrbute5 = #{attrbute5}
+              ,attrbute6 = #{attrbute6}
+              ,attrbute7 = #{attrbute7}
+              ,attrbute8 = #{attrbute8}
+              ,attrbute9 = #{attrbute9}
+              ,attrbute10 = #{attrbute10}
+         where 1 = 1
+           and log_id = #{log_id}
+    </update>
+
+    <delete id="deleteSysLog" parameterType="SysLog">
+        delete
+          from sys_log
+         where 1 = 1
+           and log_id = #{log_id}
+    </delete>
+
+    <select id="selectSysLogByPk" parameterType="SysLog" resultType="SysLog">
+        select log_id
+              ,log_source
+              ,log_type
+              ,log_time
+              ,log_content
+              ,user_id
+              ,attrbute1
+              ,attrbute2
+              ,attrbute3
+              ,attrbute4
+              ,attrbute5
+              ,attrbute6
+              ,attrbute7
+              ,attrbute8
+              ,attrbute9
+              ,attrbute10
+          from sys_log
+         where 1 = 1
+           and log_id = #{log_id}
+    </select>
+
+</mapper>

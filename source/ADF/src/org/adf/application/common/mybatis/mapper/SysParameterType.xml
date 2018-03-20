@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysParameterType">
+
+    <insert id="insertSysParameterType" parameterType="SysParameterType">
+        insert into sys_parameter_type
+       (type_code
+       ,type_name
+       ,display_order
+       ,description)
+        values
+       (#{type_code}
+       ,#{type_name}
+       ,#{display_order}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysParameterType" parameterType="SysParameterType">
+        update sys_parameter_type
+           set type_code = #{type_code}
+              ,type_name = #{type_name}
+              ,display_order = #{display_order}
+              ,description = #{description}
+         where 1 = 1
+           and type_code = #{type_code}
+    </update>
+
+    <delete id="deleteSysParameterType" parameterType="SysParameterType">
+        delete
+          from sys_parameter_type
+         where 1 = 1
+           and type_code = #{type_code}
+    </delete>
+
+    <select id="selectSysParameterTypeByPk" parameterType="SysParameterType" resultType="SysParameterType">
+        select type_code
+              ,type_name
+              ,display_order
+              ,description
+          from sys_parameter_type
+         where 1 = 1
+           and type_code = #{type_code}
+    </select>
+
+</mapper>

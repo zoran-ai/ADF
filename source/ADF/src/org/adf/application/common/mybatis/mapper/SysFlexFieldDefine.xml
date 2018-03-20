@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysFlexFieldDefine">
+
+    <insert id="insertSysFlexFieldDefine" parameterType="SysFlexFieldDefine">
+        insert into sys_flex_field_define
+       (flex_code
+       ,flex_name
+       ,table_name
+       ,enabled_flag
+       ,description)
+        values
+       (#{flex_code}
+       ,#{flex_name}
+       ,#{table_name}
+       ,#{enabled_flag}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysFlexFieldDefine" parameterType="SysFlexFieldDefine">
+        update sys_flex_field_define
+           set flex_code = #{flex_code}
+              ,flex_name = #{flex_name}
+              ,table_name = #{table_name}
+              ,enabled_flag = #{enabled_flag}
+              ,description = #{description}
+         where 1 = 1
+           and flex_code = #{flex_code}
+    </update>
+
+    <delete id="deleteSysFlexFieldDefine" parameterType="SysFlexFieldDefine">
+        delete
+          from sys_flex_field_define
+         where 1 = 1
+           and flex_code = #{flex_code}
+    </delete>
+
+    <select id="selectSysFlexFieldDefineByPk" parameterType="SysFlexFieldDefine" resultType="SysFlexFieldDefine">
+        select flex_code
+              ,flex_name
+              ,table_name
+              ,enabled_flag
+              ,description
+          from sys_flex_field_define
+         where 1 = 1
+           and flex_code = #{flex_code}
+    </select>
+
+</mapper>

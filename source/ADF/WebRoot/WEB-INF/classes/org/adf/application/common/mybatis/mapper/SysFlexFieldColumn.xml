@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysFlexFieldColumn">
+
+    <insert id="insertSysFlexFieldColumn" parameterType="SysFlexFieldColumn">
+        insert into sys_flex_field_column
+       (column_name
+       ,flex_code
+       ,column_title
+       ,element_type
+       ,ddt_code
+       ,lov_code
+       ,ds_code
+       ,description)
+        values
+       (#{column_name}
+       ,#{flex_code}
+       ,#{column_title}
+       ,#{element_type}
+       ,#{ddt_code}
+       ,#{lov_code}
+       ,#{ds_code}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysFlexFieldColumn" parameterType="SysFlexFieldColumn">
+        update sys_flex_field_column
+           set column_name = #{column_name}
+              ,flex_code = #{flex_code}
+              ,column_title = #{column_title}
+              ,element_type = #{element_type}
+              ,ddt_code = #{ddt_code}
+              ,lov_code = #{lov_code}
+              ,ds_code = #{ds_code}
+              ,description = #{description}
+         where 1 = 1
+           and column_name = #{column_name}
+           and flex_code = #{flex_code}
+    </update>
+
+    <delete id="deleteSysFlexFieldColumn" parameterType="SysFlexFieldColumn">
+        delete
+          from sys_flex_field_column
+         where 1 = 1
+           and column_name = #{column_name}
+           and flex_code = #{flex_code}
+    </delete>
+
+    <select id="selectSysFlexFieldColumnByPk" parameterType="SysFlexFieldColumn" resultType="SysFlexFieldColumn">
+        select column_name
+              ,flex_code
+              ,column_title
+              ,element_type
+              ,ddt_code
+              ,lov_code
+              ,ds_code
+              ,description
+          from sys_flex_field_column
+         where 1 = 1
+           and column_name = #{column_name}
+           and flex_code = #{flex_code}
+    </select>
+
+</mapper>

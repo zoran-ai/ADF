@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.lov.mapper.LovMapper">
+
+	<!-- 获取值列表字段列表 -->
+	<select id="getLovColumnList" parameterType="QueryParameter" resultType="SysLovColumn">
+		select 
+		  lc.column_name column_name,
+		  ifnull(lc.column_title, '-') column_title,
+		  ifnull(lc.display_flag, 'N') display_flag,
+		  ifnull(lc.return_value_flag, 'N') return_value_flag,
+		  ifnull(lc.return_text_flag, 'N') return_text_flag 
+		from
+		  sys_lov_column lc, sys_lov_define sld, information_schema.columns c
+		where lc.lov_code = sld.lov_code
+		  and lc.column_name = c.column_name
+		  and sld.view_name = lower(c.table_name)
+		  and lc.lov_code = #{lovCode}
+		  and lower(c.table_schema) = #{schema}
+		order by c.ordinal_position 
+	</select>
+	
+	<!-- 获取值列表视图SQL -->
+	<select id="getLovViewSQL" parameterType="QueryParameter" resultType="string">
+		select v.view_definition
+		  from information_schema.views v, sys_lov_define sld
+		 where lower(v.table_schema) = #{schema}
+		   and lower(v.table_name) = sld.view_name
+		   and sld.lov_code = #{lovCode}
+    </select>
+    
+	<!-- 获取值列表数据列表 -->
+    <select id="getLovDataList" parameterType="string" resultType="hashmap">  
+    	${value} 
+	</select>
+	
+</mapper>

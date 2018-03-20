@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.lot.mapper.LotMapper">
+
+	<!-- 获取树列表-->
+	<select id="getTreeList" parameterType="QueryParameter" resultType="TreeNodeVO">
+		select 
+		  dsn.node_code,
+		  dsn.parent_node_code,
+		  dsn.node_name
+		from
+		  sys_data_struct_node dsn 
+		where dsn.struct_code = #{structCode}
+		  and dsn.parent_node_code = #{parentCode}
+		  and dsn.enabled_flag = 'Y' 
+		order by dsn.display_order
+	</select>
+	
+	<!-- 获取树列表节点显示文本 -->
+	<select id="getTreeDisplayText" parameterType="QueryParameter" resultType="string">
+		select dsn.node_name
+		  from sys_data_struct_node dsn 
+		 where dsn.struct_code = #{structCode}
+		   and dsn.node_code = #{nodeCode}
+		   and dsn.enabled_flag = 'Y' 
+	</select>
+	
+</mapper>

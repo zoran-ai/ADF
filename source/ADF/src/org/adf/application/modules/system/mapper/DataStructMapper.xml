@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.DataStructMapper">
+
+	<!-- 获取数据结构定义列表 -->
+	<select id="getDataStructDefineList" resultType="DataStructDefineVO">
+		select 
+		  struct_code,
+		  struct_name,
+		  node_code_rule,
+		  rule_prefix,
+		  rule_length,
+		  description,
+		  ddi.item_name node_code_rule_name 
+		from
+		  sys_data_struct_define dsd 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'code_rule' 
+		      and dsd.node_code_rule = ddi.item_code
+		    ) 
+		order by dsd.struct_code 
+	</select>
+	
+	<!-- 获取数据结构属性列表 -->
+	<select id="getDataStructAttributeList" parameterType="QueryParameter" resultType="DataStructAttributeVO">
+		select 
+		  dsa.attribute_code,
+		  dsa.struct_code,
+		  dsa.attribute_name,
+		  dsa.element_type,
+		  dsa.ddt_code,
+		  dsa.lov_code,
+		  dsa.ds_code,
+		  dsa.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_data_struct_attribute dsa 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = dsa.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (dsa.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (dsa.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (dsa.ds_code = dsd.struct_code) 
+		where dsa.struct_code = #{structCode}
+		order by dsa.attribute_code 
+	</select>
+	
+	<!-- 获取数据结构属性信息 -->
+	<select id="getDataStructAttributeInfo" parameterType="QueryParameter" resultType="DataStructAttributeVO">
+		select 
+		  dsa.attribute_code,
+		  dsa.struct_code,
+		  dsa.attribute_name,
+		  dsa.element_type,
+		  dsa.ddt_code,
+		  dsa.lov_code,
+		  dsa.ds_code,
+		  dsa.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_data_struct_attribute dsa 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = dsa.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (dsa.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (dsa.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (dsa.ds_code = dsd.struct_code) 
+		where dsa.struct_code = #{structCode}
+		  and dsa.attribute_code = #{attributeCode}
+		order by dsa.attribute_code 
+	</select>
+	
+	<!-- 获取数据结构节点树-->
+	<select id="getDataStructNodeTree" parameterType="QueryParameter" resultType="TreeNodeVO">
+		select 
+		  dsn.node_code,
+		  dsn.parent_node_code,
+		  dsn.node_name
+		from
+		  sys_data_struct_node dsn 
+		where dsn.struct_code = #{structCode}
+		  and dsn.enabled_flag = 'Y' 
+		  and dsn.parent_node_code = #{parentCode}
+		order by dsn.display_order   
+	</select>
+	
+	<!-- 获取数据结构节点编码-->
+	<select id="getDataStructNodeCode" parameterType="QueryParameter" resultType="string">
+		select 
+		  lpad(
+		    cast(
+		      ifnull(
+		        substr(
+		          ifnull(max(dsn.node_code), #{parentCode}),
+		          instr(ifnull(max(dsn.node_code), #{parentCode}), #{parentCode}) + length(#{parentCode})
+		        ),
+		        0
+		      ) as unsigned int
+		    ) + 1,
+		    #{length},
+		    '0'
+		  ) node_code 
+		from
+		  sys_data_struct_node dsn 
+		where dsn.struct_code = #{structCode}
+		  and dsn.parent_node_code = #{parentCode}
+	</select>
+	
+	<!-- 获取数据结构节点属性列表 -->
+	<select id="getDataStructNodeAttributeList" parameterType="QueryParameter" resultType="DataStructNodeAttributeVO">
+        select 
+		  dsa.struct_code,
+		  #{nodeCode} node_code,
+		  dsa.attribute_code,
+		  dsa.attribute_name,
+		  dsna.attribute_value,
+		  dsa.element_type,
+		  dsa.ddt_code,
+		  dsa.lov_code,
+		  dsa.ds_code 
+		from
+		  sys_data_struct_attribute dsa 
+		  left join sys_data_struct_node_attribute dsna 
+		    on (
+		      dsa.struct_code = dsna.struct_code 
+		      and dsa.attribute_code = dsna.attribute_code
+		      and dsna.node_code = #{nodeCode}
+		    ) 
+		where dsa.struct_code = #{structCode}
+		order by dsna.attribute_code 
+    </select>
+    
+</mapper>

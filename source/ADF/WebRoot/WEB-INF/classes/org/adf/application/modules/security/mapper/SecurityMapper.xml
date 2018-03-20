@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.security.mapper.SecurityMapper">
+	
+	<!-- 获取手风琴菜单列表 -->
+	<select id="getAccordionMenuList" parameterType="QueryParameter" resultType="TreeNodeVO">
+		select 
+		  dsn.node_code,
+		  dsn.parent_node_code,
+		  dsn.node_name,
+		  dsnai.attribute_value node_icon, 
+		  sf.function_url node_url,
+		  (select 
+		    if(count(*) = 0, 'Y', 'N') 
+		  from
+		    sys_data_struct_node subdsn 
+		  where subdsn.struct_code = dsn.struct_code 
+		    and subdsn.parent_node_code = dsn.node_code) is_leaf_node,
+		  sf.function_code
+		from
+		  sys_data_struct_define dsd, sys_data_struct_node dsn 
+		  left join sys_data_struct_node_attribute dsnaf 
+		    on (
+		      dsn.node_code = dsnaf.node_code 
+		      and dsn.struct_code = dsnaf.struct_code 
+		      and dsnaf.attribute_code = #{functionAttributeCode}
+		    ) 
+		  left join sys_data_struct_node_attribute dsnai 
+		    on (
+		      dsn.node_code = dsnai.node_code 
+		      and dsn.struct_code = dsnai.struct_code 
+		      and dsnai.attribute_code = #{iconAttributeCode}
+		    ) 
+		  left join sys_function sf 
+		    on (
+		      dsnaf.attribute_value = sf.function_code
+		    ) 
+		where dsd.struct_code = #{structCode}
+		  and dsd.struct_code = dsn.struct_code 
+		  and dsn.enabled_flag = 'Y' 
+		  and dsn.parent_node_code = if(
+		    dsd.node_code_rule = 'auto', dsd.rule_prefix, 'ROOT'
+		  ) 
+		order by dsn.display_order  
+	</select>
+	
+	<!-- 获取树状菜单列表 -->
+	<select id="getTreeMenuList" parameterType="QueryParameter" resultType="TreeNodeVO">
+	
+		
+		select 
+		  dsn.node_code,
+		  dsn.parent_node_code,
+		  dsn.node_name,
+		  dsna.attribute_value node_url,
+	      dsna2.attribute_value node_icon,
+		  (select 
+		    if(count(*) = 0, 'Y', 'N') 
+		  from
+		    sys_data_struct_node subdsn 
+		  where subdsn.struct_code = dsn.struct_code 
+		    and subdsn.parent_node_code = dsn.node_code) is_leaf_node
+		 
+		from
+		  sys_data_struct_node dsn 
+		 
+		  left join sys_data_struct_node_attribute dsna2
+		    on (
+		       dsna2.node_code = dsn.node_code
+		      and  dsna2.struct_code =dsn.struct_code 
+		      and dsna2.attribute_code =  #{iconAttributeCode}
+		    ) 
+		   left join sys_data_struct_node_attribute dsna
+		   on(
+		      dsna.node_code = dsn.node_code
+		      and  dsna.struct_code =dsn.struct_code 
+		   and dsna.attribute_code= #{page_url}
+		   )
+		 
+		where dsn.struct_code =  #{structCode}
+		  and dsn.enabled_flag = 'Y' 
+		  and dsn.parent_node_code = #{parentCode}
+		order by dsn.display_order   
+	</select>
+	
+</mapper>

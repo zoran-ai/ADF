@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.FlexFieldMapper">
+
+	<!-- 获取弹性域定义列表 -->
+	<select id="getFlexFieldDefineList" resultType="SysFlexFieldDefine">
+        select flex_code
+              ,flex_name
+              ,table_name
+              ,enabled_flag
+              ,description
+          from sys_flex_field_define
+         order by flex_code
+    </select>
+    
+    <!-- 获取弹性域字段列表 -->
+	<select id="getFlexFieldColumnList" parameterType="QueryParameter" resultType="FlexFieldColumnVO">
+        select 
+		  ffc.column_name,
+		  ffc.flex_code,
+		  ffc.column_title,
+		  ffc.element_type,
+		  ffc.ddt_code,
+		  ffc.lov_code,
+		  ffc.ds_code,
+		  ffc.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_flex_field_column ffc 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = ffc.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (ffc.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (ffc.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (ffc.ds_code = dsd.struct_code) 
+		where ffc.flex_code = #{flexCode}
+		order by ffc.column_name
+    </select>
+    
+    <!-- 获取弹性域字段信息 -->
+	<select id="getFlexFieldColumnInfo" parameterType="QueryParameter" resultType="FlexFieldColumnVO">
+        select 
+		  ffc.column_name,
+		  ffc.flex_code,
+		  ffc.column_title,
+		  ffc.element_type,
+		  ffc.ddt_code,
+		  ffc.lov_code,
+		  ffc.ds_code,
+		  ffc.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_flex_field_column ffc 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = ffc.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (ffc.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (ffc.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (ffc.ds_code = dsd.struct_code) 
+		where ffc.flex_code = #{flexCode}
+		  and ffc.column_name = #{columnName}
+		order by ffc.column_name
+    </select>
+    
+    <!-- 获取表列表 -->
+	<select id="getTableList" parameterType="QueryParameter" resultType="string">
+		select 
+		  t.table_name
+		from
+		  information_schema.tables t 
+		where t.table_schema = #{schema} 
+		  and t.table_type = 'BASE TABLE' 
+		order by t.table_name
+	</select>
+    
+    <!-- 获取表字段信息列表 -->
+	<select id="getAttributeColumnList" parameterType="QueryParameter" resultType="string">
+		select c.column_name
+		  from information_schema.columns c
+		 where c.table_schema = #{schema}
+		   and c.table_name = #{tableName}
+		   and lower(c.column_name) like 'attribute%'
+		 order by c.column_name
+	</select>
+	
+</mapper>

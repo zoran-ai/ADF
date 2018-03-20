@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.list.mapper.ListMapper">
+
+	<!-- 根据一个数据字典类型获取数据字典项列表 -->
+	<select id="getSingleDataDictItemList" parameterType="QueryParameter" resultType="SysDataDictItem">
+        select item_code
+              ,type_code
+              ,item_name
+              ,display_order
+              ,enabled_flag
+          from sys_data_dict_item
+         where type_code = #{code}
+         
+         <if test="enabled_flag != null and enabled_flag != ''">
+	       and enabled_flag = #{enabled_flag}
+		</if>
+         
+         order by display_order, item_code
+    </select>
+    
+    <!-- 根据多个数据字典类型获取数据字典项列表 -->
+	<select id="getMultiDataDictItemList" parameterType="QueryParameter" resultType="SysDataDictItem">
+        select item_code
+              ,type_code
+              ,item_name
+              ,display_order
+              ,enabled_flag
+          from sys_data_dict_item
+         where type_code in (${type_code})
+         
+         <if test="enabled_flag != null and enabled_flag != ''">
+	       and enabled_flag = #{enabled_flag}
+		</if>
+         
+         order by type_code, display_order, item_code
+    </select>
+
+</mapper>

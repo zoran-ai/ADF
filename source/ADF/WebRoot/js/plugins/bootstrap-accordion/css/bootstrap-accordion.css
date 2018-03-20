@@ -1,0 +1,71 @@
+.accordion {
+	width: 228px;
+	margin: 0px;
+	padding: 0px;
+	background: #ffffff;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.accordion .link {
+	cursor: pointer;
+	display: block;
+	padding: 10px 10px 10px 10px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #4d4d4d;
+	border-bottom: 1px solid #ccc;
+	position: relative;
+	-webkit-transition: all 0.4s ease;
+	-o-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+}
+
+.accordion li i {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 13px;
+	-webkit-transition: all 0.4s ease;
+	-o-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+}
+
+.accordion li i.fa-chevron-down {
+	top:13px;
+	right: 10px;
+	left: auto;
+	font-size: 13px;
+}
+
+.accordion li.open .link {
+	color: #337ab7;
+}
+
+.accordion li.open i {
+	color: #337ab7;
+}
+
+.accordion li.open i.fa-chevron-down {
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.accordion li.default .submenu {
+	display: block;
+}
+
+/**
+ * Submenu
+ -----------------------------*/
+.submenu {
+	display: none;
+	background: #ecf0f5;
+	font-size: 13px;
+	margin: 0px;
+	padding: 1px;
+}
+ 

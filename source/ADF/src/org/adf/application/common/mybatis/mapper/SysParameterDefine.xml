@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysParameterDefine">
+
+    <insert id="insertSysParameterDefine" parameterType="SysParameterDefine">
+        insert into sys_parameter_define
+       (parameter_code
+       ,parameter_name
+       ,parameter_type
+       ,element_type
+       ,ddt_code
+       ,lov_code
+       ,ds_code
+       ,display_order
+       ,description)
+        values
+       (#{parameter_code}
+       ,#{parameter_name}
+       ,#{parameter_type}
+       ,#{element_type}
+       ,#{ddt_code}
+       ,#{lov_code}
+       ,#{ds_code}
+       ,#{display_order}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysParameterDefine" parameterType="SysParameterDefine">
+        update sys_parameter_define
+           set parameter_code = #{parameter_code}
+              ,parameter_name = #{parameter_name}
+              ,parameter_type = #{parameter_type}
+              ,element_type = #{element_type}
+              ,ddt_code = #{ddt_code}
+              ,lov_code = #{lov_code}
+              ,ds_code = #{ds_code}
+              ,display_order = #{display_order}
+              ,description = #{description}
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </update>
+
+    <delete id="deleteSysParameterDefine" parameterType="SysParameterDefine">
+        delete
+          from sys_parameter_define
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </delete>
+
+    <select id="selectSysParameterDefineByPk" parameterType="SysParameterDefine" resultType="SysParameterDefine">
+        select parameter_code
+              ,parameter_name
+              ,parameter_type
+              ,element_type
+              ,ddt_code
+              ,lov_code
+              ,ds_code
+              ,display_order
+              ,description
+          from sys_parameter_define
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </select>
+
+</mapper>

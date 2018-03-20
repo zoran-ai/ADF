@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysRoleMenuRelation">
+
+    <insert id="insertSysRoleMenuRelation" parameterType="SysRoleMenuRelation">
+        insert into sys_role_menu_relation
+       (role_id
+       ,menu_code)
+        values
+       (#{role_id}
+       ,#{menu_code})
+    </insert>
+
+    <update id="updateSysRoleMenuRelation" parameterType="SysRoleMenuRelation">
+        update sys_role_menu_relation
+           set role_id = #{role_id}
+              ,menu_code = #{menu_code}
+         where 1 = 1
+           and role_id = #{role_id}
+           and menu_code = #{menu_code}
+    </update>
+
+    <delete id="deleteSysRoleMenuRelation" parameterType="SysRoleMenuRelation">
+        delete
+          from sys_role_menu_relation
+         where 1 = 1
+           and role_id = #{role_id}
+           and menu_code = #{menu_code}
+    </delete>
+
+    <select id="selectSysRoleMenuRelationByPk" parameterType="SysRoleMenuRelation" resultType="SysRoleMenuRelation">
+        select role_id
+              ,menu_code
+          from sys_role_menu_relation
+         where 1 = 1
+           and role_id = #{role_id}
+           and menu_code = #{menu_code}
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/jms
+    http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+    http://activemq.apache.org/schema/core
+    http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd">
+
+	<amq:connectionFactory id="amqConnectionFactory"
+        brokerURL="${jms.url}" userName="${jms.username}" password="${jms.password}" />
+        
+    <bean id="amqCachingConnectionFactory"
+        class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory" />
+        <property name="sessionCacheSize" value="100" />
+    </bean>
+    
+    <!-- 定义JmsTemplate的Queue类型 -->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <constructor-arg ref="amqCachingConnectionFactory" />
+        <!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <property name="pubSubDomain" value="false" />
+    </bean>
+    
+    <!-- 定义JmsTemplate的Topic类型 -->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <constructor-arg ref="amqCachingConnectionFactory" />
+        <!-- pub/sub模型（发布/订阅） -->
+        <property name="pubSubDomain" value="true" />
+    </bean>
+    
+    <!-- 定义Queue监听器 -->
+    <jms:listener-container destination-type="queue" container-type="default" connection-factory="amqCachingConnectionFactory" acknowledge="auto">
+        <jms:listener destination="adf.queue.test" ref="queueReceiver"/>
+    </jms:listener-container>
+	
+	<!-- 定义Topic监听器 -->
+    <jms:listener-container destination-type="topic" container-type="default" connection-factory="amqCachingConnectionFactory" acknowledge="auto">
+        <jms:listener destination="adf.topic.test" ref="topicReceiver"/>
+    </jms:listener-container>
+    
+    <!-- 队列接收器 -->
+    <bean id="queueReceiver" class="org.adf.framework.mq.QueueReceiver" />
+    
+    <!-- 队列发送器 -->
+    <bean id="queueSender" class="org.adf.framework.mq.QueueSender">
+    	<property name="jmsTemplate" ref="jmsQueueTemplate" />
+    </bean>
+    
+    <!-- 主题接收器 -->
+    <bean id="topicReceiver" class="org.adf.framework.mq.TopicReceiver" />
+    
+    <!-- 主题发送器 -->
+    <bean id="topicSender" class="org.adf.framework.mq.TopicSender">
+    	<property name="jmsTemplate" ref="jmsTopicTemplate" />
+    </bean>
+    
+</beans>

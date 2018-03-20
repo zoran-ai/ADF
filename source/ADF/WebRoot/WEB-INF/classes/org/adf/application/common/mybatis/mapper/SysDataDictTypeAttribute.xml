@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataDictTypeAttribute">
+
+    <insert id="insertSysDataDictTypeAttribute" parameterType="SysDataDictTypeAttribute">
+        insert into sys_data_dict_type_attribute
+       (attribute_code
+       ,type_code
+       ,attribute_name
+       ,element_type
+       ,ddt_code
+       ,lov_code
+       ,ds_code
+       ,description)
+        values
+       (#{attribute_code}
+       ,#{type_code}
+       ,#{attribute_name}
+       ,#{element_type}
+       ,#{ddt_code}
+       ,#{lov_code}
+       ,#{ds_code}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysDataDictTypeAttribute" parameterType="SysDataDictTypeAttribute">
+        update sys_data_dict_type_attribute
+           set attribute_code = #{attribute_code}
+              ,type_code = #{type_code}
+              ,attribute_name = #{attribute_name}
+              ,element_type = #{element_type}
+              ,ddt_code = #{ddt_code}
+              ,lov_code = #{lov_code}
+              ,ds_code = #{ds_code}
+              ,description = #{description}
+         where 1 = 1
+           and type_code = #{type_code}
+           and attribute_code = #{attribute_code}
+    </update>
+
+    <delete id="deleteSysDataDictTypeAttribute" parameterType="SysDataDictTypeAttribute">
+        delete
+          from sys_data_dict_type_attribute
+         where 1 = 1
+           and type_code = #{type_code}
+           and attribute_code = #{attribute_code}
+    </delete>
+
+    <select id="selectSysDataDictTypeAttributeByPk" parameterType="SysDataDictTypeAttribute" resultType="SysDataDictTypeAttribute">
+        select attribute_code
+              ,type_code
+              ,attribute_name
+              ,element_type
+              ,ddt_code
+              ,lov_code
+              ,ds_code
+              ,description
+          from sys_data_dict_type_attribute
+         where 1 = 1
+           and type_code = #{type_code}
+           and attribute_code = #{attribute_code}
+    </select>
+
+</mapper>

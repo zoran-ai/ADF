@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.adf.framework.mybatis.generate.mapper.MyBatisMapper">
+	
+	<!-- 获取表字段信息列表 -->
+	<select id="getColumnList" parameterType="hashmap" resultType="ColumnVO">
+		select c.table_schema,
+		       c.table_name,
+		       c.column_name,
+		       c.column_type,
+		       c.column_comment,
+		       c.data_type,
+		       c.is_nullable
+		  from information_schema.columns c
+		 where c.table_schema = #{tableSchema}
+		   and c.table_name = #{tableName}
+		 order by c.ordinal_position
+	</select>
+	
+	<!-- 获取表主键约束字段列表 -->
+	<select id="getPKColumnList" parameterType="hashmap" resultType="PKColumnVO">
+		select kcu.constraint_schema,
+		       kcu.constraint_name,
+		       tc.constraint_type,
+		       kcu.table_name,
+		       kcu.column_name,
+       		   kcu.ordinal_position
+		  from information_schema.key_column_usage kcu, information_schema.table_constraints tc 
+		 where kcu.table_schema = tc.table_schema
+		   and kcu.constraint_schema = tc.constraint_schema
+		   and kcu.table_name = tc.table_name
+		   and kcu.constraint_name = tc.constraint_name
+		   and tc.constraint_type = 'PRIMARY KEY' 
+		   and kcu.table_schema = #{tableSchema}
+		   and kcu.table_name = #{tableName}
+		 order by kcu.ordinal_position 
+	</select>
+	
+</mapper>

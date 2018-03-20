@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataStructDefine">
+
+    <insert id="insertSysDataStructDefine" parameterType="SysDataStructDefine">
+        insert into sys_data_struct_define
+       (struct_code
+       ,struct_name
+       ,node_code_rule
+       ,rule_prefix
+       ,rule_length
+       ,description)
+        values
+       (#{struct_code}
+       ,#{struct_name}
+       ,#{node_code_rule}
+       ,#{rule_prefix}
+       ,#{rule_length}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysDataStructDefine" parameterType="SysDataStructDefine">
+        update sys_data_struct_define
+           set struct_code = #{struct_code}
+              ,struct_name = #{struct_name}
+              ,node_code_rule = #{node_code_rule}
+              ,rule_prefix = #{rule_prefix}
+              ,rule_length = #{rule_length}
+              ,description = #{description}
+         where 1 = 1
+           and struct_code = #{struct_code}
+    </update>
+
+    <delete id="deleteSysDataStructDefine" parameterType="SysDataStructDefine">
+        delete
+          from sys_data_struct_define
+         where 1 = 1
+           and struct_code = #{struct_code}
+    </delete>
+
+    <select id="selectSysDataStructDefineByPk" parameterType="SysDataStructDefine" resultType="SysDataStructDefine">
+        select struct_code
+              ,struct_name
+              ,node_code_rule
+              ,rule_prefix
+              ,rule_length
+              ,description
+          from sys_data_struct_define
+         where 1 = 1
+           and struct_code = #{struct_code}
+    </select>
+
+</mapper>

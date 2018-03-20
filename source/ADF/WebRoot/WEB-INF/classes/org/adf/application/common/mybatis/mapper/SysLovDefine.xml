@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysLovDefine">
+
+    <insert id="insertSysLovDefine" parameterType="SysLovDefine">
+        insert into sys_lov_define
+       (lov_code
+       ,lov_name
+       ,view_name
+       ,description)
+        values
+       (#{lov_code}
+       ,#{lov_name}
+       ,#{view_name}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysLovDefine" parameterType="SysLovDefine">
+        update sys_lov_define
+           set lov_code = #{lov_code}
+              ,lov_name = #{lov_name}
+              ,view_name = #{view_name}
+              ,description = #{description}
+         where 1 = 1
+           and lov_code = #{lov_code}
+    </update>
+
+    <delete id="deleteSysLovDefine" parameterType="SysLovDefine">
+        delete
+          from sys_lov_define
+         where 1 = 1
+           and lov_code = #{lov_code}
+    </delete>
+
+    <select id="selectSysLovDefineByPk" parameterType="SysLovDefine" resultType="SysLovDefine">
+        select lov_code
+              ,lov_name
+              ,view_name
+              ,description
+          from sys_lov_define
+         where 1 = 1
+           and lov_code = #{lov_code}
+    </select>
+
+</mapper>

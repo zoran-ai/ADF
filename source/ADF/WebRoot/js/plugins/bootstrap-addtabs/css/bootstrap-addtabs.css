@@ -1,0 +1,35 @@
+
+.close-tab {
+    font-size: 12px;
+    position:absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 100;
+    cursor: hand;
+    cursor: pointer;
+    color: #ddd;
+}
+
+.close-item {
+    font-size: 10px;
+    position:absolute;
+    right: 5px;
+    vertical-align: middle;
+    z-index: 100;
+    cursor: hand;
+    cursor: pointer;
+    color: #ddd;
+}
+
+.topbar-collapse {
+    float:right;
+}
+
+.iframeClass {
+	display: block;
+    width: 100%;
+    border: 0px;
+    border-width: 0px;
+    margin: 0px;
+    padding: 0px;
+}

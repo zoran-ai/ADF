@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysParameterConfig">
+
+    <insert id="insertSysParameterConfig" parameterType="SysParameterConfig">
+        insert into sys_parameter_config
+       (parameter_code
+       ,parameter_value)
+        values
+       (#{parameter_code}
+       ,#{parameter_value})
+    </insert>
+
+    <update id="updateSysParameterConfig" parameterType="SysParameterConfig">
+        update sys_parameter_config
+           set parameter_code = #{parameter_code}
+              ,parameter_value = #{parameter_value}
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </update>
+
+    <delete id="deleteSysParameterConfig" parameterType="SysParameterConfig">
+        delete
+          from sys_parameter_config
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </delete>
+
+    <select id="selectSysParameterConfigByPk" parameterType="SysParameterConfig" resultType="SysParameterConfig">
+        select parameter_code
+              ,parameter_value
+          from sys_parameter_config
+         where 1 = 1
+           and parameter_code = #{parameter_code}
+    </select>
+
+</mapper>

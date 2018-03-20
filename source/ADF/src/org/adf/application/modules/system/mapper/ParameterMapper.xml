@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.ParameterMapper">
+
+	<!-- 获取参数类型列表 -->
+	<select id="getParameterTypeList" resultType="SysParameterType">
+        select type_code
+              ,type_name
+              ,display_order
+              ,description
+          from sys_parameter_type
+         order by display_order
+    </select>
+    
+    <!-- 获取参数定义列表 -->
+	<select id="getParameterDefineList" parameterType="QueryParameter" resultType="SysParameterDefineVO">
+        select 
+		  pd.parameter_code,
+		  pd.parameter_type,
+		  pd.parameter_name,
+		  pd.element_type,
+		  pd.ddt_code,
+		  pd.lov_code,
+		  pd.ds_code,
+		  pd.display_order,
+		  pd.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_parameter_define pd 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = pd.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (pd.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (pd.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (pd.ds_code = dsd.struct_code) 
+		where pd.parameter_type = #{typeCode}
+		order by pd.display_order
+    </select>
+    
+    <!-- 获取参数定义信息 -->
+	<select id="getParameterDefineInfo" parameterType="QueryParameter" resultType="SysParameterDefineVO">
+        select 
+		  pd.parameter_code,
+		  pd.parameter_type,
+		  pd.parameter_name,
+		  pd.element_type,
+		  pd.ddt_code,
+		  pd.lov_code,
+		  pd.ds_code,
+		  pd.display_order,
+		  pd.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_parameter_define pd 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = pd.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (pd.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (pd.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (pd.ds_code = dsd.struct_code) 
+		where pd.parameter_code = #{parameterCode}
+    </select>
+    
+    <!-- 获取参数配置列表 -->
+	<select id="getParameterConfigList" parameterType="QueryParameter" resultType="SysParameterDefineVO">
+        select 
+		  pd.parameter_code,
+		  pd.parameter_type,
+		  pd.parameter_name,
+		  pd.element_type,
+		  pd.ddt_code,
+		  pd.lov_code,
+		  pd.ds_code,
+		  pd.display_order,
+		  pd.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text,
+		  pc.parameter_value
+		from
+		  sys_parameter_define pd
+		  left join sys_parameter_config pc 
+		    on (pd.parameter_code = pc.parameter_code) 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = pd.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (pd.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (pd.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (pd.ds_code = dsd.struct_code) 
+		where pd.parameter_type = #{typeCode}
+		order by pd.display_order
+    </select>
+    
+    <!-- 获取多个参数值 -->
+	<select id="getMultiParameterValue" parameterType="QueryParameter" resultType="SysParameterConfig">
+        select parameter_code
+              ,parameter_value
+          from sys_parameter_config pc
+         where pc.parameter_code in (${parameterCode})
+         order by parameter_code
+    </select>
+</mapper>

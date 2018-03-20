@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.DataDictMapper">
+
+	<!-- 获取数据字典类型列表 -->
+	<select id="getDataDictTypeList" resultType="SysDataDictType">
+        select type_code
+              ,type_name
+              ,description
+          from sys_data_dict_type
+         order by type_code
+    </select>
+	
+	<!-- 获取数据字典项列表 -->
+	<select id="getDataDictItemList" parameterType="QueryParameter" resultType="SysDataDictItem">
+        select item_code
+              ,type_code
+              ,item_name
+              ,display_order
+              ,enabled_flag
+          from sys_data_dict_item
+         where type_code = #{code}
+         order by display_order, item_code
+    </select>
+    
+    <!-- 获取数据字典类型属性列表 -->
+	<select id="getDataDictTypeAttributeList" parameterType="QueryParameter" resultType="DataDictTypeAttributeVO">
+        select 
+		  ddta.attribute_code,
+		  ddta.type_code,
+		  ddta.attribute_name,
+		  ddta.element_type,
+		  ddta.ddt_code,
+		  ddta.lov_code,
+		  ddta.ds_code,
+		  ddta.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_data_dict_type_attribute ddta 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = ddta.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (ddta.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (ddta.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (ddta.ds_code = dsd.struct_code) 
+		where ddta.type_code = #{code}
+		order by ddta.attribute_code
+    </select>
+    
+    <!-- 获取数据字典类型属性信息 -->
+	<select id="getDataDictTypeAttributeInfo" parameterType="QueryParameter" resultType="DataDictTypeAttributeVO">
+        select 
+		  ddta.attribute_code,
+		  ddta.type_code,
+		  ddta.attribute_name,
+		  ddta.element_type,
+		  ddta.ddt_code,
+		  ddta.lov_code,
+		  ddta.ds_code,
+		  ddta.description,
+		  ddi.item_name element_type_name,
+		  ddt.type_name ddt_text,
+		  sld.lov_name lov_text,
+		  dsd.struct_name ds_text 
+		from
+		  sys_data_dict_type_attribute ddta 
+		  left join sys_data_dict_item ddi 
+		    on (
+		      ddi.type_code = 'element_type' 
+		      and ddi.item_code = ddta.element_type
+		    ) 
+		  left join sys_data_dict_type ddt 
+		    on (ddta.ddt_code = ddt.type_code) 
+		  left join sys_lov_define sld 
+		    on (ddta.lov_code = sld.lov_code) 
+		  left join sys_data_struct_define dsd 
+		    on (ddta.ds_code = dsd.struct_code) 
+		where ddta.type_code = #{typeCode}
+		  and ddta.attribute_code = #{attributeCode}
+    </select>
+    
+    <!-- 获取数据字典项属性列表 -->
+	<select id="getDataDictItemAttributeList" parameterType="QueryParameter" resultType="DataDictItemAttributeVO">
+        select 
+          ddta.type_code,
+          #{itemCode} item_code,
+		  ddta.attribute_code,
+		  ddta.attribute_name,
+		  ddia.attribute_value,
+		  ddta.element_type,
+		  ddta.ddt_code,
+		  ddta.lov_code,
+		  ddta.ds_code
+		from
+		  sys_data_dict_type_attribute ddta 
+		  left join sys_data_dict_item_attribute ddia 
+		    on (
+		      ddta.type_code = ddia.type_code 
+		      and ddta.attribute_code = ddia.attribute_code
+		      and ddia.item_code = #{itemCode}
+		    ) 
+		where ddta.type_code = #{typeCode}
+		order by ddta.attribute_code
+    </select>
+    
+</mapper>

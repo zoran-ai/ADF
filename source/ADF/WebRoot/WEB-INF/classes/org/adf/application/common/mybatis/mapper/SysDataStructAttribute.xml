@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataStructAttribute">
+
+    <insert id="insertSysDataStructAttribute" parameterType="SysDataStructAttribute">
+        insert into sys_data_struct_attribute
+       (attribute_code
+       ,struct_code
+       ,attribute_name
+       ,element_type
+       ,ddt_code
+       ,ds_code
+       ,lov_code
+       ,description)
+        values
+       (#{attribute_code}
+       ,#{struct_code}
+       ,#{attribute_name}
+       ,#{element_type}
+       ,#{ddt_code}
+       ,#{ds_code}
+       ,#{lov_code}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysDataStructAttribute" parameterType="SysDataStructAttribute">
+        update sys_data_struct_attribute
+           set attribute_code = #{attribute_code}
+              ,struct_code = #{struct_code}
+              ,attribute_name = #{attribute_name}
+              ,element_type = #{element_type}
+              ,ddt_code = #{ddt_code}
+              ,ds_code = #{ds_code}
+              ,lov_code = #{lov_code}
+              ,description = #{description}
+         where 1 = 1
+           and attribute_code = #{attribute_code}
+           and struct_code = #{struct_code}
+    </update>
+
+    <delete id="deleteSysDataStructAttribute" parameterType="SysDataStructAttribute">
+        delete
+          from sys_data_struct_attribute
+         where 1 = 1
+           and attribute_code = #{attribute_code}
+           and struct_code = #{struct_code}
+    </delete>
+
+    <select id="selectSysDataStructAttributeByPk" parameterType="SysDataStructAttribute" resultType="SysDataStructAttribute">
+        select attribute_code
+              ,struct_code
+              ,attribute_name
+              ,element_type
+              ,ddt_code
+              ,ds_code
+              ,lov_code
+              ,description
+          from sys_data_struct_attribute
+         where 1 = 1
+           and attribute_code = #{attribute_code}
+           and struct_code = #{struct_code}
+    </select>
+
+</mapper>

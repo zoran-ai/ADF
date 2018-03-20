@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysDataStructNode">
+
+    <insert id="insertSysDataStructNode" parameterType="SysDataStructNode">
+        insert into sys_data_struct_node
+       (node_code
+       ,parent_node_code
+       ,struct_code
+       ,node_name
+       ,display_order
+       ,enabled_flag
+       ,description)
+        values
+       (#{node_code}
+       ,#{parent_node_code}
+       ,#{struct_code}
+       ,#{node_name}
+       ,#{display_order}
+       ,#{enabled_flag}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysDataStructNode" parameterType="SysDataStructNode">
+        update sys_data_struct_node
+           set node_code = #{node_code}
+              ,parent_node_code = #{parent_node_code}
+              ,struct_code = #{struct_code}
+              ,node_name = #{node_name}
+              ,display_order = #{display_order}
+              ,enabled_flag = #{enabled_flag}
+              ,description = #{description}
+         where 1 = 1
+           and node_code = #{node_code}
+           and struct_code = #{struct_code}
+    </update>
+
+    <delete id="deleteSysDataStructNode" parameterType="SysDataStructNode">
+        delete
+          from sys_data_struct_node
+         where 1 = 1
+           and node_code = #{node_code}
+           and struct_code = #{struct_code}
+    </delete>
+
+    <select id="selectSysDataStructNodeByPk" parameterType="SysDataStructNode" resultType="SysDataStructNode">
+        select node_code
+              ,parent_node_code
+              ,struct_code
+              ,node_name
+              ,display_order
+              ,enabled_flag
+              ,description
+          from sys_data_struct_node
+         where 1 = 1
+           and node_code = #{node_code}
+           and struct_code = #{struct_code}
+    </select>
+
+</mapper>

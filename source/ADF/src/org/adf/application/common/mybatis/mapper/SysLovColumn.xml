@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysLovColumn">
+
+    <insert id="insertSysLovColumn" parameterType="SysLovColumn">
+        insert into sys_lov_column
+       (lov_code
+       ,column_name
+       ,column_title
+       ,display_flag
+       ,return_value_flag
+       ,return_text_flag)
+        values
+       (#{lov_code}
+       ,#{column_name}
+       ,#{column_title}
+       ,#{display_flag}
+       ,#{return_value_flag}
+       ,#{return_text_flag})
+    </insert>
+
+    <update id="updateSysLovColumn" parameterType="SysLovColumn">
+        update sys_lov_column
+           set lov_code = #{lov_code}
+              ,column_name = #{column_name}
+              ,column_title = #{column_title}
+              ,display_flag = #{display_flag}
+              ,return_value_flag = #{return_value_flag}
+              ,return_text_flag = #{return_text_flag}
+         where 1 = 1
+           and lov_code = #{lov_code}
+           and column_name = #{column_name}
+    </update>
+
+    <delete id="deleteSysLovColumn" parameterType="SysLovColumn">
+        delete
+          from sys_lov_column
+         where 1 = 1
+           and lov_code = #{lov_code}
+           and column_name = #{column_name}
+    </delete>
+
+    <select id="selectSysLovColumnByPk" parameterType="SysLovColumn" resultType="SysLovColumn">
+        select lov_code
+              ,column_name
+              ,column_title
+              ,display_flag
+              ,return_value_flag
+              ,return_text_flag
+          from sys_lov_column
+         where 1 = 1
+           and lov_code = #{lov_code}
+           and column_name = #{column_name}
+    </select>
+
+</mapper>

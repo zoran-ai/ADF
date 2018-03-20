@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.FunctionMapper">
+
+	<!-- 获取功能列表 -->
+	<select id="getFunctionList" resultType="SysFunction">
+        select function_code
+              ,function_name
+              ,function_url
+              ,description
+          from sys_function
+         order by function_code
+    </select>
+    
+    <!-- 获取操作列表 -->
+    <select id="getOperationList" parameterType="QueryParameter" resultType="SysOperation">
+        select operation_code
+              ,function_code
+              ,operation_name
+              ,description
+          from sys_operation
+         where function_code = #{functionCode}
+         order by operation_code
+    </select>
+	
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.common.mybatis.mapper.SysFunction">
+
+    <insert id="insertSysFunction" parameterType="SysFunction">
+        insert into sys_function
+       (function_code
+       ,function_name
+       ,function_url
+       ,description)
+        values
+       (#{function_code}
+       ,#{function_name}
+       ,#{function_url}
+       ,#{description})
+    </insert>
+
+    <update id="updateSysFunction" parameterType="SysFunction">
+        update sys_function
+           set function_code = #{function_code}
+              ,function_name = #{function_name}
+              ,function_url = #{function_url}
+              ,description = #{description}
+         where 1 = 1
+           and function_code = #{function_code}
+    </update>
+
+    <delete id="deleteSysFunction" parameterType="SysFunction">
+        delete
+          from sys_function
+         where 1 = 1
+           and function_code = #{function_code}
+    </delete>
+
+    <select id="selectSysFunctionByPk" parameterType="SysFunction" resultType="SysFunction">
+        select function_code
+              ,function_name
+              ,function_url
+              ,description
+          from sys_function
+         where 1 = 1
+           and function_code = #{function_code}
+    </select>
+
+</mapper>

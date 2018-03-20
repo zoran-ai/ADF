@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.adf.application.modules.system.mapper.ListOfValueMapper">
+
+	<!-- 获取值列表定义列表 -->
+	<select id="getLovDefineList" resultType="SysLovDefine">
+        select lov_code
+              ,lov_name
+              ,view_name
+              ,description
+          from sys_lov_define
+         order by lov_code
+    </select>
+    
+    <!-- 获取值列表视图列表 -->
+	<select id="getLovViewList" parameterType="QueryParameter" resultType="string">
+        select
+		  lower(v.table_name) view_name
+		from
+		  information_schema.views v
+		where lower(v.table_schema) = #{schema}
+		  and lower(v.table_name) like 'lov%v'
+		order by v.table_name
+    </select>
+    
+    <!-- 获取视图字段列表 -->
+	<select id="getViewColumnList" parameterType="QueryParameter" resultType="SysLovColumn">
+        select 
+          '' lov_code,
+		  c.column_name column_name,
+		  ifnull(c.column_comment, '-') column_title,
+		  'Y' display_flag,
+		  'N' return_value_flag,
+		  'N' return_text_flag
+		from
+		  information_schema.columns c 
+		where lower(c.table_schema) = #{schema}
+		  and lower(c.table_name) = #{viewName}
+		order by c.ordinal_position 
+    </select>
+    
+    <!-- 获取值列表字段列表 -->
+	<select id="getLovColumnList" parameterType="QueryParameter" resultType="SysLovColumn">
+        select 
+          lc.lov_code lov_code,
+		  lc.column_name column_name,
+		  ifnull(lc.column_title, ifnull(c.column_comment,'')) column_title,
+		  ifnull(lc.display_flag,'Y') display_flag,
+		  ifnull(lc.return_value_flag,'N') return_value_flag,
+		  ifnull(lc.return_text_flag,'N') return_text_flag
+		from
+		  information_schema.columns c, sys_lov_column lc
+		where lower(c.table_schema) = #{schema}
+		  and lower(c.table_name) = #{viewName}
+		  and lc.lov_code = #{lovCode}
+		  and c.column_name = lc.column_name
+		order by c.ordinal_position 
+    </select>
+    
+    <!-- 删除当前值列表的字段列表 -->
+	<select id="removeLovColumnList" parameterType="QueryParameter">
+        delete
+          from sys_lov_column
+         where lov_code = #{lovCode}
+    </select>
+    
+</mapper>
